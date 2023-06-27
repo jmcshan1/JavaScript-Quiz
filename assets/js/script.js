@@ -5,9 +5,10 @@ var quizEL = document.getElementById("quiz-area");
 var questionEL = document.getElementById("question");
 var answersListEL = document.getElementById("answers");
 var answerCheckEl = document.getElementById("answer-checker");
+var headerEl = document.getElementById("header")
 
 var score = 0;
-var timeRemaining = 50;
+var timeRemaining = 51;
 var questionNumber = 0;
 var questions = [
     "The first index in an array has an index of _____.",
@@ -26,9 +27,17 @@ var currentQuestion = "";
 function startQuiz(){
     titleEL.style.display = "none";
     startButtonEL.style.display = "none";
-    var questionNumber = 0;
-    var timeRemaining = 50;
+    timeRemaining = 51;
+    questionNumber = 0;
     timeLeftEl.textContent = timeRemaining;
+    var timerInterval = setInterval(function() {
+        timeRemaining--;
+        timeLeftEl.textContent = timeRemaining;
+        if(timeRemaining <=0){
+            endQuiz;
+            clearInterval(timerInterval);
+        }
+      }, 1000);
 
     generateQuestion();
 }
@@ -49,8 +58,18 @@ function generateAnswers(){
 
 function nextQuestion(){
     questionNumber++;
-    generateQuestion();
-    generateAnswers();
+    console.log(questionNumber);
+    console.log(questions.length);
+
+    if(questionNumber === questions.length){
+        endQuiz();
+        return;
+    }else{
+        console.log("Next");
+        generateQuestion();
+        generateAnswers();
+    }
+    
 }
 
 answers.addEventListener("click", function(event){
@@ -69,7 +88,7 @@ function checkAnswer(event){
         correctAnswer();
     }else if(questionNumber === 2 && event.matches("#button-2")){
         correctAnswer();
-    }else if(questionNumber === 0 && event.matches("#button-4")){
+    }else if(questionNumber === 3 && event.matches("#button-4")){
         correctAnswer();
     }else{
         wrongAnswer();
@@ -84,8 +103,21 @@ function correctAnswer(){
 
 function wrongAnswer(){
     timeRemaining = timeRemaining - 10;
+    if(timeRemaining <=0){
+        endQuiz();
+        return;
+    }
     answerCheckEl.textContent = "Bzzz. Wrong!";
+    timeLeftEl.textContent = timeRemaining;
+}
+
+function endQuiz(){
+    console.log("End quiz");
+    quizEL.style.display = "none";
+    answerCheckEl.style.display = "none";
+    headerEl.style.display = "none";
 }
 
 startButtonEL.addEventListener("click", startQuiz);
+
 
