@@ -5,7 +5,7 @@ var quizEL = document.getElementById("quiz-area");
 var questionEL = document.getElementById("question");
 var answersListEL = document.getElementById("answers");
 var answerCheckEl = document.getElementById("answer-checker");
-var headerEl = document.getElementById("header")
+var headerEl = document.getElementById("header");
 
 var score = 0;
 var timeRemaining = 51;
@@ -21,14 +21,26 @@ var answerOptions = [
     "String, Undefined, Binary, Null",
     "var variableName =, variableName =,  const variableName =, let variableName =",
     "shift(), pop(), append(), push()"
-    ]
+    ];
 var currentQuestion = "";
+
+    var form = document.createElement("form");
+    var initials= document.createElement("input");
+    var submitBtn = document.createElement("button");
+    var gameDone = document.createElement("h1");
+    var score = document.createElement("p");
+    submitBtn.textContent = "Submit";
+    score.textContent = "Your highscore is: " + score;
+
+    var highScore = document.createElement("ul");
 
 function startQuiz(){
     titleEL.style.display = "none";
     startButtonEL.style.display = "none";
+    quizEL.style.display = "block";
     timeRemaining = 51;
     questionNumber = 0;
+    var score = 0;
     timeLeftEl.textContent = timeRemaining;
     var timerInterval = setInterval(function() {
         timeRemaining--;
@@ -40,12 +52,13 @@ function startQuiz(){
       }, 1000);
 
     generateQuestion();
+    console.log("genereate")
 }
 
 function generateQuestion(){
     currentQuestion = questions[questionNumber];
     questionEL.textContent = currentQuestion;
-    generateAnswers()
+    generateAnswers();
 }
 
 function generateAnswers(){
@@ -72,14 +85,7 @@ function nextQuestion(){
     
 }
 
-answers.addEventListener("click", function(event){
-    var element = event.target;
 
-    if(element.matches("button")){
-        checkAnswer(element);
-        nextQuestion();
-    }
-});
 
 function checkAnswer(event){
     if(questionNumber === 0 && event.matches("#button-1")){
@@ -116,8 +122,35 @@ function endQuiz(){
     quizEL.style.display = "none";
     answerCheckEl.style.display = "none";
     headerEl.style.display = "none";
+    enterName();
 }
+
+function enterName(){
+    gameDone.textContent = "All Done!";
+
+    document.body.appendChild(gameDone);
+    document.body.appendChild(form);
+    form.appendChild(initials);
+    form.appendChild(submitBtn);
+}
+
+function highScore(){
+
+}
+quizEL.style.display = "none";
+
+answers.addEventListener("click", function(event){
+    var element = event.target;
+
+    if(element.matches("button")){
+        checkAnswer(element);
+        nextQuestion();
+    }
+});
 
 startButtonEL.addEventListener("click", startQuiz);
 
-
+submitBtn.addEventListener("click", function(event){
+    event.preventDefault();
+    highScore();
+});
