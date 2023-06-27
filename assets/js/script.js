@@ -4,7 +4,9 @@ var startButtonEL = document.getElementById("start-button");
 var quizEL = document.getElementById("quiz-area");
 var questionEL = document.getElementById("question");
 var answersListEL = document.getElementById("answers");
+var answerCheckEl = document.getElementById("answer-checker");
 
+var score = 0;
 var timeRemaining = 50;
 var questionNumber = 0;
 var questions = [
@@ -15,8 +17,8 @@ var questions = [
     ];
 var answerOptions = [
     "0, 1, O, First",
-    "String Undefined Binary Null",
-    "var variableName = variableName =  const variableName =, let variableName =",
+    "String, Undefined, Binary, Null",
+    "var variableName =, variableName =,  const variableName =, let variableName =",
     "shift(), pop(), append(), push()"
     ]
 var currentQuestion = "";
@@ -45,13 +47,45 @@ function generateAnswers(){
     }
 }
 
-function nextQuestion{
+function nextQuestion(){
     questionNumber++;
-    generateQuestion
+    generateQuestion();
+    generateAnswers();
 }
 
 answers.addEventListener("click", function(event){
-    if(event.tar)
-})
+    var element = event.target;
+
+    if(element.matches("button")){
+        checkAnswer(element);
+        nextQuestion();
+    }
+});
+
+function checkAnswer(event){
+    if(questionNumber === 0 && event.matches("#button-1")){
+        correctAnswer();
+    }else if(questionNumber === 1 && event.matches("#button-3")){
+        correctAnswer();
+    }else if(questionNumber === 2 && event.matches("#button-2")){
+        correctAnswer();
+    }else if(questionNumber === 0 && event.matches("#button-4")){
+        correctAnswer();
+    }else{
+        wrongAnswer();
+    };
+
+}
+
+function correctAnswer(){
+    score = score + 5;
+    answerCheckEl.textContent = "Correct!";
+}
+
+function wrongAnswer(){
+    timeRemaining = timeRemaining - 10;
+    answerCheckEl.textContent = "Bzzz. Wrong!";
+}
+
 startButtonEL.addEventListener("click", startQuiz);
 
