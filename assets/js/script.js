@@ -135,7 +135,7 @@ function enterName(){
 }
 
 function highScore(){
-
+    
 }
 quizEL.style.display = "none";
 
