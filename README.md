@@ -9,3 +9,4 @@ In the JavaScript, I made variables that corresponded to the elements in the doc
 ![Alt text](./assets/css/Javascript-quiz-sc.png)
 
 ### Link:
+https://jmcshan1.github.io/JavaScript-Quiz/
